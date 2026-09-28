@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>徐文臻研究室 | 一橋大学 Data & AI-Driven Marketing Lab (Xu's Lab)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Serif+JP:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #0b1e36; --primary-light: #163259; --accent: #b89758; --accent-soft: rgba(184,151,88,0.12);
+  --bg-page: #fbfbfd; --bg-card: #ffffff; --text-main: #1f2937; --text-muted: #4b5563; --text-sub: #6b7280;
+  --border: #e5e7eb; --shadow: 0 4px 16px rgba(11,30,54,0.06); --radius: 10px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg-page); color: var(--text-main); line-height: 1.7; -webkit-text-size-adjust: 100%; }
+h1, h2, h3, .serif { font-family: 'Noto Serif JP', Georgia, serif; }
+.cinzel { font-family: 'Cinzel', serif; }
+
+/* Trilingual Switch Engine */
+html[lang="ja"] .t-en, html[lang="ja"] .t-zh,
+html[lang="en"] .t-ja, html[lang="en"] .t-zh,
+html[lang="zh"] .t-ja, html[lang="zh"] .t-en {
+  display: none !important;
+}
+
+/* Top Notification PopUp Banner */
+#top-popup {
+  background: linear-gradient(90deg, #071629 0%, #0d284a 50%, #071629 100%);
+  color: #f1f5f9;
+  border-bottom: 2px solid var(--accent);
+  padding: 0.65rem 1.2rem;
+  font-size: 0.85rem;
+  position: relative;
+  z-index: 2000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.popup-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.popup-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  line-height: 1.45;
+}
+.popup-badge {
+  background: var(--accent);
+  color: #0b1e36;
+  font-weight: 700;
+  font-size: 0.72rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.popup-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 0.3rem;
+  line-height: 1;
+}
+.popup-close:hover { color: #ffffff; }
+
+/* Header */
+header { position: sticky; top:0; background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); z-index: 1000; }
+.nav-wrap { max-width: 1200px; margin: 0 auto; padding: 0.75rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+.brand { text-decoration: none; display: flex; flex-direction: column; }
+.brand-sub { font-size: 0.68rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.brand-title { font-size: 1.05rem; font-weight: 700; color: var(--primary); }
+.nav-menu { display: flex; gap: 1.3rem; list-style: none; align-items: center; }
+.nav-link { text-decoration: none; color: var(--text-muted); font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+.nav-link:hover { color: var(--primary); }
+.lang-btn { border: 1px solid var(--border); background: #f8fafc; padding: 3px 8px; border-radius: 12px; font-size: 0.72rem; font-weight: 600; cursor: pointer; color: var(--text-sub); }
+.lang-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, #0b1e36 0%, #163660 100%); color: #fff; padding: 4.8rem 1.2rem 4rem; }
+.hero-inner { max-width: 1200px; margin: 0 auto; }
+.badge { display: inline-block; background: rgba(184,151,88,0.2); border: 1px solid rgba(184,151,88,0.4); color: #e2ce9d; font-size: 0.78rem; font-weight: 600; padding: 0.25rem 0.8rem; border-radius: 20px; margin-bottom: 1rem; }
+.hero-title { font-size: clamp(1.8rem, 3.4vw, 2.8rem); line-height: 1.3; margin-bottom: 1.1rem; }
+.hero-sub { font-size: 1rem; color: rgba(255,255,255,0.88); max-width: 820px; margin-bottom: 1.8rem; line-height: 1.75; }
+.btn { display: inline-flex; align-items: center; padding: 0.7rem 1.4rem; border-radius: 6px; font-size: 0.88rem; font-weight: 600; text-decoration: none; transition: 0.2s; }
+.btn-gold { background: var(--accent); color: #fff; margin-right: 0.6rem; }
+.btn-gold:hover { background: #a88749; }
+.btn-outline { border: 1px solid rgba(255,255,255,0.4); color: #fff; }
+.btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+/* Stats */
+.stats { background: #fff; border-bottom: 1px solid var(--border); }
+.stats-inner { max-width: 1200px; margin: 0 auto; padding: 1.4rem 1.2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; }
+.stat-num { font-size: 2rem; font-weight: 700; color: var(--primary); line-height: 1.1; }
+.stat-lbl { font-size: 0.82rem; color: var(--text-muted); }
+
+/* Sections */
+.section { padding: 4.2rem 1.2rem; }
+.container { max-width: 1200px; margin: 0 auto; }
+.sec-tag { font-size: 0.72rem; font-weight: 700; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 0.25rem; }
+.sec-title { font-size: 1.75rem; color: var(--primary); margin-bottom: 0.5rem; }
+.sec-desc { color: var(--text-muted); margin-bottom: 2.2rem; font-size: 0.92rem; }
+
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.6rem; box-shadow: var(--shadow); }
+
+/* Faculty */
+.fac-wrap { display: grid; grid-template-columns: 270px 1fr; gap: 2.8rem; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 2.2rem; }
+.avatar-img { width: 170px; height: 170px; border-radius: 50%; object-fit: cover; object-position: center 15%; border: 4px solid #fff; box-shadow: var(--shadow); display: block; margin: 0 auto 1.2rem; }
+.fac-link { display: flex; justify-content: space-between; padding: 0.45rem 0.75rem; background: #f8fafc; border: 1px solid var(--border); border-radius: 4px; text-decoration: none; color: var(--text-muted); font-size: 0.8rem; margin-top: 0.45rem; }
+.fac-link:hover { border-color: var(--accent); color: var(--primary); }
+
+/* Publications */
+.pub-group { margin-bottom: 2.2rem; }
+.pub-cat { font-size: 1.05rem; font-weight: 700; color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 0.35rem; margin-bottom: 0.9rem; }
+.pub-item { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 0.75rem; }
+.pub-title { font-size: 0.95rem; font-weight: 600; color: var(--primary); margin-bottom: 0.25rem; line-height: 1.45; }
+.pub-meta { font-size: 0.83rem; color: var(--text-muted); }
+.pub-badge { background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; margin-right: 5px; }
+.pub-badge-open { background: #f3f4f6; color: #4b5563; padding: 2px 6px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; margin-right: 5px; }
+
+/* Join Us & HQ Card */
+.join-box { background: linear-gradient(135deg, #0b1e36, #163259); color: #fff; border-radius: var(--radius); padding: 2.8rem 2.2rem; }
+.hq-box { background: rgba(255,255,255,0.12); border: 1px solid rgba(226,206,157,0.4); border-radius: 6px; padding: 1.2rem; margin-bottom: 1.6rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+footer { background: #06111f; color: #94a3b8; padding: 3rem 1.2rem 1.8rem; font-size: 0.83rem; border-top: 1px solid #1e293b; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 1.8rem; }
+.footer-inner a { color: #94a3b8; text-decoration: none; }
+.footer-inner a:hover { color: #fff; }
+.footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.4rem; font-size: 0.75rem; color: #64748b; }
+
+/* Mobile & iPhone Adaptive Optimization */
+@media (max-width: 768px) {
+  html { font-size: 15px; }
+  .grid-3, .stats-inner, .fac-wrap, .footer-inner { grid-template-columns: 1fr; }
+  .nav-menu { display: none; }
+  .section { padding: 2.8rem 1rem; }
+  .hero { padding: 3.5rem 1rem 2.8rem; }
+  .brand-title { font-size: 0.92rem; }
+  .hero-title { font-size: 1.45rem; line-height: 1.35; word-break: keep-all; overflow-wrap: break-word; }
+  .hero-sub { font-size: 0.92rem; line-height: 1.65; }
+  .sec-title { font-size: 1.35rem; }
+  .avatar-img { width: 140px; height: 140px; }
+  .popup-inner { flex-direction: column; align-items: flex-start; }
+  .popup-close { align-self: flex-end; margin-top: -1.5rem; }
+  .join-box { padding: 1.8rem 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top News / PopUp Announcement Banner -->
+<div id="top-popup">
+  <div class="popup-inner">
+    <div class="popup-content">
+      <span class="popup-badge"><span class="t-ja">重要なお知らせ</span><span class="t-en">ANNOUNCEMENT</span><span class="t-zh">重要通知</span></span>
+      <div class="t-ja">
+        <strong>【オープンゼミ開催】</strong>11月24日(火)・26日(木) 5限（1210教室 / 旧LLD）商学部生歓迎！ ｜ <strong>【最新論文】</strong>『Acta Psychologica』(2026) 掲載！
+      </div>
+      <div class="t-en">
+        <strong>[Open Seminar]</strong> Nov 24 & 26 (Period 5, Rm 1210 / Old LLD) for undergraduates! ｜ <strong>[Latest Paper]</strong> Published in <em>Acta Psychologica</em> (2026)!
+      </div>
+      <div class="t-zh">
+        <strong>【研讨班开放日】</strong>11月24日、26日第5节（1210教室 / 原LLD）欢迎商学部本科生！ ｜ <strong>【最新论文】</strong>见刊《Acta Psychologica》(2026)！
+      </div>
+    </div>
+    <button class="popup-close" onclick="document.getElementById('top-popup').style.display='none';" title="Close">✕</button>
+  </div>
+</div>
+
+<header>
+  <div class="nav-wrap">
+    <a href="#" class="brand">
+      <span class="brand-sub">Hitotsubashi University</span>
+      <span class="brand-title serif">
+        <span class="t-ja">データ＆AI駆動型マーケティング研究室（徐研究室 / Xu's Lab）</span>
+        <span class="t-en">Data & AI-Driven Marketing Lab (Xu's Lab)</span>
+        <span class="t-zh">数据与AI驱动型营销科学实验室（徐研究室 / Xu's Lab）</span>
+      </span>
+    </a>
+    <div style="display:flex; align-items:center; gap:0.9rem;">
+      <ul class="nav-menu">
+        <li><a href="#overview" class="nav-link"><span class="t-ja">概要</span><span class="t-en">Overview</span><span class="t-zh">概述</span></a></li>
+        <li><a href="#faculty" class="nav-link"><span class="t-ja">教員紹介</span><span class="t-en">Faculty</span><span class="t-zh">导师介绍</span></a></li>
+        <li><a href="#research" class="nav-link"><span class="t-ja">研究内容</span><span class="t-en">Research</span><span class="t-zh">研究方向</span></a></li>
+        <li><a href="#publications" class="nav-link"><span class="t-ja">業績・特許</span><span class="t-en">Publications</span><span class="t-zh">论文成果</span></a></li>
+        <li><a href="#join" class="nav-link"><span class="t-ja">ゼミ・大学院募集</span><span class="t-en">Join Us</span><span class="t-zh">招生招聘</span></a></li>
+      </ul>
+      <div style="display:flex; gap:3px;">
+        <button class="lang-btn active" onclick="setLang('ja')">JA</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('zh')">ZH</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="badge">
+      <span class="t-ja">一橋大学 商学部・大学院経営管理研究科</span>
+      <span class="t-en">Hitotsubashi University — Graduate School of Business Administration</span>
+      <span class="t-zh">一桥大学商学部 · 大学院经营管理研究科</span>
+    </div>
+    <h1 class="hero-title serif">
+      <span class="t-ja">データとAIで、<br>マーケティングの未来を拓く。</span>
+      <span class="t-en">Shaping the Future of Marketing<br>with Data & AI.</span>
+      <span class="t-zh">以数据与人工智能，<br>开拓营销科学之未来。</span>
+    </h1>
+    <p class="hero-sub">
+      <span class="t-ja">一橋大学 商学部・大学院経営管理研究科 徐研究室（Xu's Lab / Data & AI-Driven Marketing Lab）は、社会心理学、ヒューマン・コンピュータ・インタラクション（HCI）、計算社会科学を架橋し、デジタル社会における人間の「主体感（Sense of Agency）」の維持と自律的意思決定を支援する革新的マーケティング科学を追求します。</span>
+      <span class="t-en">At the Data & AI-Driven Marketing Lab (Xu's Lab), Hitotsubashi University, we bridge social psychology, human-computer interaction (HCI), and computational social science to empower human autonomy and decision-making in an algorithm-driven world.</span>
+      <span class="t-zh">一桥大学商学部・大学院经营管理研究科 徐研究室（Xu's Lab / 数据与AI驱动型营销科学实验室）深度融通社会心理学、人机交互（HCI）与计算社会科学，探索在算法协同时代维系人类自主性、行动主体感（Sense of Agency）与科学决策的前沿路径。</span>
+    </p>
+    <div>
+      <a href="#join" class="btn btn-gold">
+        <span class="t-ja">研究室への参加（ゼミ・大学院） →</span>
+        <span class="t-en">Join Our Lab (Seminar / Graduate) →</span>
+        <span class="t-zh">加入实验室（研讨班 / 硕博招募） →</span>
+      </a>
+      <a href="#research" class="btn btn-outline">
+        <span class="t-ja">研究内容を見る →</span>
+        <span class="t-en">Explore Research →</span>
+        <span class="t-zh">了解研究方向 →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stats-inner">
+    <div>
+      <div class="stat-num cinzel">3</div>
+      <div class="stat-lbl"><span class="t-ja">コア・リサーチフロンティア</span><span class="t-en">Core Research Frontiers</span><span class="t-zh">大核心研究支柱</span></div>
+    </div>
+    <div>
+      <div class="stat-num cinzel">5+</div>
+      <div class="stat-lbl"><span class="t-ja">競争的資金・産学連携プロジェクト</span><span class="t-en">Funded Research Projects</span><span class="t-zh">项国家基金与产学合作项目</span></div>
+    </div>
+    <div>
+      <div class="stat-num cinzel">24</div>
+      <div class="stat-lbl"><span class="t-ja">近5年の論文・国際会議・特許成果</span><span class="t-en">Papers & Patents (Past 5 Years)</span><span class="t-zh">项近五年论文、顶会发表与专利</span></div>
+    </div>
+  </div>
+</div>
+
+<section id="overview" class="section">
+  <div class="container">
+    <span class="sec-tag">01 Overview</span>
+    <h2 class="sec-title serif">
+      <span class="t-ja">研究室の活動とミッション</span>
+      <span class="t-en">Mission & Activities</span>
+      <span class="t-zh">实验室定位与使命</span>
+    </h2>
+    <p class="sec-desc">
+      <span class="t-ja">文理融合の手法により、アルゴリズムと人間が共生する時代の意思決定メカニズムを解明します。</span>
+      <span class="t-en">Bridging quantitative science and behavioral theory to decode human-AI symbiosis.</span>
+      <span class="t-zh">采用文理交叉范式，解析人工智能与人类社会共生时期的决策认知机理。</span>
+    </p>
+    <div class="grid-3">
+      <div class="card">
+        <h3 class="serif" style="color:var(--primary); margin-bottom:0.6rem;">
+          <span class="t-ja">01 学術研究フロンティア</span><span class="t-en">01 Academic Frontiers</span><span class="t-zh">01 学术研究前沿</span>
+        </h3>
+        <p style="font-size:0.9rem; color:var(--text-muted);">
+          <span class="t-ja">行動主体感（Sense of Agency）の数理モデル化、随時適応型介入（JITAI）、悪質UI（ダークパターン）防御AIシステムの構築など最先端の学際研究を展開。</span>
+          <span class="t-en">Investigating computational modeling of Sense of Agency (SoA), Just-In-Time Adaptive Interventions (JITAI), and AI defense against deceptive patterns.</span>
+          <span class="t-zh">深耕行动主体感（Sense of Agency）数理建模、实时自适应干预（JITAI）、欺骗性设计模式（暗黑模式）防御系统等顶尖交叉课题。</span>
+        </p>
+      </div>
+      <div class="card">
+        <h3 class="serif" style="color:var(--primary); margin-bottom:0.6rem;">
+          <span class="t-ja">02 産学連携と社会実装</span><span class="t-en">02 Industry Collaboration</span><span class="t-zh">02 产学研协同创新</span>
+        </h3>
+        <p style="font-size:0.9rem; color:var(--text-muted);">
+          <span class="t-ja">株式会社電通総研「意思決定×行動主体感研究会」やKDDI総合研究所とのAI研究など、理論構築から実社会・企業への還元まで一気通貫で推進。</span>
+          <span class="t-en">Partnering with Dentsu Soken, KDDI Research, and global institutions to translate cutting-edge scientific models into industry practice.</span>
+          <span class="t-zh">与电通总研（DENTSU SOKEN）共建「决策与主体感研究会」，与KDDI综合研究所紧密合作，推动高水平学术理论向产业前沿赋能转化。</span>
+        </p>
+      </div>
+      <div class="card">
+        <h3 class="serif" style="color:var(--primary); margin-bottom:0.6rem;">
+          <span class="t-ja">03 次世代研究者の育成</span><span class="t-en">03 Talent Development</span><span class="t-zh">03 卓越青年学者培养</span>
+        </h3>
+        <p style="font-size:0.9rem; color:var(--text-muted);">
+          <span class="t-ja">実験心理学・行動経済学から機械学習・HCIまで、多様なバックグラウンドを持つ意欲的な博士・修士学生および学部ゼミ生を歓迎します。</span>
+          <span class="t-en">Fostering the next generation of researchers across experimental psychology, behavioral economics, machine learning, and HCI.</span>
+          <span class="t-zh">兼收并蓄实验心理学、行为经济学、计算机科学与HCI等不同背景，面向全球招收充满学术志向的博士生、硕士生与学部研讨班学生。</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faculty" class="section" style="background:#f4f6fa;">
+  <div class="container">
+    <span class="sec-tag">02 Faculty Profile</span>
+    <h2 class="sec-title serif"><span class="t-ja">指導教員紹介</span><span class="t-en">Faculty Profile</span><span class="t-zh">指导导师介绍</span></h2>
+    <div class="fac-wrap">
+      <div style="text-align:center;">
+        <img src="1GEN0077.jpg" alt="徐 文臻 (Wenzhen Xu)" class="avatar-img" onerror="if(!this.dataset.step){this.dataset.step=1; this.src='1GEN0077.JPG';}else if(this.dataset.step==1){this.dataset.step=2; this.src='avatar.jpg';}">
+        <h3 class="serif" style="font-size:1.35rem; color:var(--primary);">徐 文臻 (Wenzhen Xu)</h3>
+        <div style="font-size:0.85rem; color:var(--text-sub); margin-bottom:0.3rem;">Associate Professor, Ph.D.</div>
+        <div style="font-size:0.88rem; font-weight:600; color:var(--accent);">
+          <span class="t-ja">一橋大学大学院経営管理研究科 / 商学部 准教授</span>
+          <span class="t-en">Associate Professor, Hitotsubashi University</span>
+          <span class="t-zh">一桥大学大学院经营管理研究科 / 商学部 准教授（副教授）</span>
+        </div>
+        <div style="margin-top:1.2rem; text-align:left;">
+          <a href="https://www.hit-u.ac.jp/hq-mag/chat_in_the_den/591_20250730/" target="_blank" class="fac-link" style="border-left:3px solid var(--accent); background:#fdfbf7;">
+            <strong style="color:var(--primary);"><span class="t-ja">HQウェブマガジン「研究室訪問」</span><span class="t-en">HQ Magazine Interview</span><span class="t-zh">HQ杂志「研究室探访」专访</span></strong><span>↗</span>
+          </a>
+          <a href="https://hri.ad.hit-u.ac.jp/html/100001720_research_activity_ja.html" target="_blank" class="fac-link"><span class="t-ja">一橋大学 研究者情報</span><span class="t-en">Hitotsubashi Researcher DB</span><span class="t-zh">一桥大学 官方学者档案</span><span>↗</span></a>
+          <a href="https://researchmap.jp/wenzhenxu" target="_blank" class="fac-link">researchmap<span>↗</span></a>
+          <a href="https://www.cm.hit-u.ac.jp/faculty/002321.php" target="_blank" class="fac-link"><span class="t-ja">経営管理研究科 教員紹介</span><span class="t-en">Faculty Profile Page</span><span class="t-zh">学院专任教员简介</span><span>↗</span></a>
+          <a href="https://hddrc.net/" target="_blank" class="fac-link"><span class="t-ja">データ・デザイン研究センター (DDRC)</span><span class="t-en">Data Design Research Center</span><span class="t-zh">数据设计研究中心 (DDRC)</span><span>↗</span></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="serif" style="font-size:1.15rem; color:var(--primary); margin-bottom:0.6rem;">
+          <span class="t-ja">略歴と研究哲学</span><span class="t-en">Biography & Research Philosophy</span><span class="t-zh">个人履历与治学理念</span>
+        </h4>
+        <p style="font-size:0.92rem; color:var(--text-muted); margin-bottom:0.8rem;">
+          <span class="t-ja">名古屋大学大学院教育発達科学研究科修了（博士（心理学）、文部科学省国費奨学生、PhD登龍門卓越大学院修了）。カリフォルニア大学サンタバーバラ校（UCSB）客員研究員を経て、KDDI総合研究所およびKDDI株式会社にてHuman-centered AI研究所の研究主査・上席研究員として大規模社会実証とAI基礎研究に従事。2023年より一橋大学着任。</span>
+          <span class="t-en">Dr. Wenzhen Xu holds a Ph.D. in Psychology from Nagoya University (MEXT Scholar). Prior to joining Hitotsubashi University in 2023, he was a Visiting Researcher at UC Santa Barbara and a Core Researcher/Senior Staff at the Human-centered AI Division of KDDI Research Inc.</span>
+          <span class="t-zh">日本名古屋大学心理学博士（日本文部科学省国费奖学金获得者、PhD登龙门卓越大学院修了）。曾任加州大学圣塔芭芭拉分校（UCSB）客座研究员、KDDI综合研究所及KDDI技术统括本部研究主查与主任研究员，主持多项国家级大规模社会实证与AI核心技术研发。2023年起任教于一桥大学。</span>
+        </p>
+        <p style="font-size:0.92rem; color:var(--text-muted); margin-bottom:1.5rem;">
+          <span class="t-ja">データサイエンスと社会心理学を融合させ、説得的コミュニケーション、行動変容AI、消費者の主体感（Sense of Agency）、および悪質UI防御を探究しています。</span>
+          <span class="t-en">His research sits at the intersection of data science and social psychology, focusing on persuasive communication, behavioral change AI, consumer Sense of Agency, and deceptive pattern mitigation.</span>
+          <span class="t-zh">致力于数据科学与社会心理学的深度结合，专注于说服性传播、行为改变AI、消费者的行动主体感（Sense of Agency）及欺骗性设计防御机制研究。</span>
+        </p>
+        <h4 class="serif" style="font-size:1.1rem; color:var(--primary); margin-bottom:0.5rem;">
+          <span class="t-ja">主な経歴</span><span class="t-en">Career Timeline</span><span class="t-zh">主要历任职务</span>
+        </h4>
+        <div style="border-left:2px solid var(--accent); padding-left:1rem; font-size:0.85rem; color:var(--text-muted);">
+          <div style="margin-bottom:0.5rem;"><strong>2025.04 – <span class="t-ja">現在</span><span class="t-en">Present</span><span class="t-zh">至今</span>:</strong> <span class="t-ja">一橋大学 商学部・大学院経営管理研究科 准教授（DDRC研究員兼任）</span><span class="t-en">Associate Professor, Hitotsubashi University</span><span class="t-zh">一桥大学 商学部・大学院经营管理研究科 准教授（兼任DDRC研究员）</span></div>
+          <div style="margin-bottom:0.5rem;"><strong>2023.04 – 2025.04:</strong> <span class="t-ja">一橋大学 商学部・大学院経営管理研究科 専任講師</span><span class="t-en">Assistant Professor (Lecturer), Hitotsubashi University</span><span class="t-zh">一桥大学 商学部・大学院经营管理研究科 专任讲师</span></div>
+          <div style="margin-bottom:0.5rem;"><strong>2019.05 – 2023.03:</strong> <span class="t-ja">株式会社KDDI総合研究所 Human-centered AI研究所 研究主査</span><span class="t-en">Core Researcher & Lead, KDDI Research Inc.</span><span class="t-zh">株式会社KDDI综合研究所 Human-centered AI研究所 核心研究员 / 研究主查</span></div>
+          <div><strong>2016.12 – 2017.07:</strong> <span class="t-ja">カリフォルニア大学サンタバーバラ校 (UCSB) コミュニケーション学部 客員研究員</span><span class="t-en">Visiting Scholar, Department of Communication, UC Santa Barbara</span><span class="t-zh">加州大学圣塔芭芭拉分校 (UCSB) 传播系 客座研究员</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="research" class="section">
+  <div class="container">
+    <span class="sec-tag">03 Research & Projects</span>
+    <h2 class="sec-title serif"><span class="t-ja">研究テーマと推進プロジェクト</span><span class="t-en">Research Themes & Projects</span><span class="t-zh">研究方向与在研课题</span></h2>
+    <div class="grid-3" style="margin-bottom:2.5rem;">
+      <div class="card">
+        <span style="background:var(--accent-soft); color:var(--accent); font-size:0.75rem; font-weight:700; padding:2px 6px; border-radius:3px;">Pillar 01</span>
+        <h3 class="serif" style="font-size:1.05rem; margin:0.5rem 0; color:var(--primary);">
+          <span class="t-ja">行動主体感 (Sense of Agency)</span><span class="t-en">Sense of Agency (SoA)</span><span class="t-zh">人机协同行动主体感</span>
+        </h3>
+        <p style="font-size:0.88rem; color:var(--text-muted);">
+          <span class="t-ja">AIが日常の意思決定を支援・代替する現代において、人間が自律性と責任感を保つための認知メカニズムを数理的・実証的にモデル化。</span>
+          <span class="t-en">Unraveling cognitive mechanisms and quantitative models of human autonomy when algorithmic agents assist or automate decisions.</span>
+          <span class="t-zh">当AI广泛介入日常决策时，探究人类如何保持自我效能感与控制感，构建认知心理学实证与数理分析模型。</span>
+        </p>
+      </div>
+      <div class="card">
+        <span style="background:var(--accent-soft); color:var(--accent); font-size:0.75rem; font-weight:700; padding:2px 6px; border-radius:3px;">Pillar 02</span>
+        <h3 class="serif" style="font-size:1.05rem; margin:0.5rem 0; color:var(--primary);">
+          <span class="t-ja">随時適応型介入 (JITAI)</span><span class="t-en">Adaptive Interventions (JITAI)</span><span class="t-zh">实时自适应干预 (JITAI)</span>
+        </h3>
+        <p style="font-size:0.88rem; color:var(--text-muted);">
+          <span class="t-ja">個人の心理状態や行動ログをリアルタイムで把握し、最適なタイミングでパーソナライズされた助推（Nudge）を行うAI技術を開発。</span>
+          <span class="t-en">Developing personalized behavioral nudges in real-time based on psychological context and behavioral telemetry.</span>
+          <span class="t-zh">基于用户多模态行为数据与实时心理情境，研发动态捕捉决策脆弱点并实施个性化助推（Nudge）的AI系统。</span>
+        </p>
+      </div>
+      <div class="card">
+        <span style="background:var(--accent-soft); color:var(--accent); font-size:0.75rem; font-weight:700; padding:2px 6px; border-radius:3px;">Pillar 03</span>
+        <h3 class="serif" style="font-size:1.05rem; margin:0.5rem 0; color:var(--primary);">
+          <span class="t-ja">悪質UI防御 (Dark Patterns)</span><span class="t-en">Dark Patterns Defense</span><span class="t-zh">欺骗性UI（暗黑模式）防御</span>
+        </h3>
+        <p style="font-size:0.88rem; color:var(--text-muted);">
+          <span class="t-ja">ECサイト等に潜む欺瞞的デザインパターンによる消費者の意思決定ハックを防ぐため、心理学的メカニズムを解明し防衛AIを構築。</span>
+          <span class="t-en">Investigating consumer vulnerability to deceptive designs in digital commerce and engineering real-time counter-AI defense systems.</span>
+          <span class="t-zh">解构电商平台恶意欺骗设计对消费决策的操纵机制，开发面向消费者的端侧实时阻断与防御插件。</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="serif" style="font-size:1.15rem; color:var(--primary); margin-bottom:1rem;">
+        <span class="t-ja">主な採択プロジェクト・共同研究</span><span class="t-en">Selected Research Grants & Collaborations</span><span class="t-zh">代表性科研基金与产学合作课题</span>
+      </h3>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:0.8rem; font-size:0.9rem;">
+        <li><span style="background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:3px; font-weight:600; font-size:0.75rem;"><span class="t-ja">進行中</span><span class="t-en">Active</span><span class="t-zh">在研</span></span> <strong>株式会社電通総研 共同研究</strong> (2026.07–2026.12) 「意思決定×行動主体感研究会」</li>
+        <li><span style="background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:3px; font-weight:600; font-size:0.75rem;"><span class="t-ja">進行中</span><span class="t-en">Active</span><span class="t-zh">在研</span></span> <strong>JSPS 科研費 若手研究</strong> (2025.04–2028.03) 『ディセプティブ・パターン被害の心理的メカニズムの解明と防御システムの構築』（研究代表者）</li>
+        <li><span style="background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:3px; font-weight:600; font-size:0.75rem;"><span class="t-ja">進行中</span><span class="t-en">Active</span><span class="t-zh">在研</span></span> <strong>公益財団法人 KDDI財団 学術調査研究助成</strong> (2025.04–2027.03) 『主体感の行動変容AIの支援への影響』（研究代表者）</li>
+        <li><span style="background:#e0f2fe; color:#0369a1; padding:2px 6px; border-radius:3px; font-weight:600; font-size:0.75rem;"><span class="t-ja">進行中</span><span class="t-en">Active</span><span class="t-zh">在研</span></span> <strong>中国国家自然科学基金 面上項目</strong> (2025.01–) 『基于经验迁移的信任建立及机制：人与人工智能的比较』（共同研究）</li>
+        <li><span style="background:#f3f4f6; color:#6b7280; padding:2px 6px; border-radius:3px; font-weight:600; font-size:0.75rem;"><span class="t-ja">終了</span><span class="t-en">Completed</span><span class="t-zh">已结项</span></span> <strong>公益財団法人 東京海上各務記念財団 若手研究者学術助成</strong> (2024.10–2026.03) 『eコマースにおけるディセプティブ・パターン被害の心理的メカニズムの解明』</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="publications" class="section" style="background:#f8fafc;">
+  <div class="container">
+    <span class="sec-tag">04 Publications & Patents (2022–2026)</span>
+    <h2 class="sec-title serif">
+      <span class="t-ja">近5年の学術業績・論文・特許（全一覧）</span>
+      <span class="t-en">Recent 5-Year Publications & Patents</span>
+      <span class="t-zh">近五年学术论文与专利（全量收录）</span>
+    </h2>
+    <p class="sec-desc">
+      <span class="t-ja">過去5年間（2022年〜2026年）に発表された査読付き学術誌論文、国際会議論文、著書、および登録・公開特許の全一覧です。</span>
+      <span class="t-en">Complete list of refereed journal articles, top conference proceedings, books, and registered patents from 2022 to 2026.</span>
+      <span class="t-zh">全量收录2022年至2026年间发表的同行评议期刊论文、顶级国际学术会议、编著及发明专利。</span>
+    </p>
+
+    <!-- 1. Refereed Papers -->
+    <div class="pub-group">
+      <div class="pub-cat">
+        <span class="t-ja">査読付き学術誌・国際会議論文 (13篇)</span>
+        <span class="t-en">Refereed Journal & Conference Papers (13)</span>
+        <span class="t-zh">同行评议学术期刊与顶级会议论文 (13篇)</span>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">Text-messaging with a conversational AI as an out-group member: Preliminary evidence for a new application of intergroup contact</div>
+        <div class="pub-meta">Reina Takamatsu, Takuya Futagami, <strong>Wenzhen Xu</strong> — <em>Acta Psychologica</em>, 2026. (Elsevier, 査読有り)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">GroupEnvoy: A Conversational Agent Speaking for the Outgroup to Foster Intergroup Relations</div>
+        <div class="pub-meta">Koken Hata, Rintaro Chujo, Reina Takamatsu, <strong>Wenzhen Xu</strong>, Yukino Baba — <em>Proceedings of the 8th ACM Conference on Conversational User Interfaces (CUI 2026)</em>, pp. 1–18. (ACM, 査読有り)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">From human–human to human–machine interaction: how self-service technologies change the service encounter script</div>
+        <div class="pub-meta">Nguyen P. B. Chau, <strong>Wenzhen Xu</strong>, Yuichi Washida — <em>Behaviour & Information Technology</em>, Vol. 45, No. 4, pp. 769–787, 2025. (Taylor & Francis, 査読有り)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">When empathy goes wrong: the perceived cost of empathy reduces empathic reactions to a friend</div>
+        <div class="pub-meta">Reina Takamatsu, <strong>Wenzhen Xu</strong>, Akiko Matsuo — <em>The Journal of Social Psychology</em>, Vol. 166, No. 3, pp. 330–348, 2025. (Taylor & Francis, 査読有り)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">Measuring general sense of agency: a Japanese adaptation and validation of the sense of agency scale (J-SoAS)</div>
+        <div class="pub-meta"><strong>Wenzhen Xu</strong>, Roberto Legaspi, Yuichi Ishikawa, Yuichi Washida — <em>Frontiers in Psychology</em>, Vol. 15, 2024. (査読有り・筆頭著者)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">The sense of agency in human–AI interactions</div>
+        <div class="pub-meta">Roberto Legaspi, <strong>Wenzhen Xu</strong>, Tatsuya Konishi, Shinya Wada, Nao Kobayashi, Yasushi Naruse, Yuichi Ishikawa — <em>Knowledge-Based Systems</em>, Vol. 286, 111360, 2024. (Elsevier, 査読有り)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">Does the Association Between Persuasive Strategies and Personality Types Vary Across Regions</div>
+        <div class="pub-meta"><strong>Wenzhen Xu</strong>, Roberto Legaspi, Yuichi Ishikawa — <em>Lecture Notes in Computer Science (LNCS)</em>, Vol. 13832, pp. 359–368, 2023. (Springer, 査読有り・筆頭著者)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">スマートホンログやウェアラブルデバイスデータを用いた行動主体感の推定</div>
+        <div class="pub-meta">外川 龍之介, <strong>徐 文臻</strong>, レガスピ ロベルト, 石川 雄一 — <em>人工知能学会全国大会論文集 (JSAI 2023)</em>, 3Xin439, 2023.</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">Multidimensional Analysis of Sense of Agency During Goal Pursuit</div>
+        <div class="pub-meta">Roberto Legaspi, <strong>Wenzhen Xu</strong>, Tatsuya Konishi, Shinya Wada, Yuichi Ishikawa — <em>Proceedings of the 30th ACM Conference on User Modeling, Adaptation and Personalization (UMAP 2022)</em>, pp. 34–47, 2022. (ACM, 査読有り)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">Media Exposure and Risk Perception as Predictors of Engagement in COVID-19 Preventive Behaviors: Extending the Theory of Planned Behavior Across Two Cultures</div>
+        <div class="pub-meta">Xuechen Hu, Xingjian Gao, <strong>Wenzhen Xu</strong>, Jiro Takai — <em>Online Media and Global Communication</em>, Vol. 1, No. 1, pp. 90–123, 2022. (De Gruyter, 査読有り)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">Examining the Impacts of Exaggerated Notification Texts on Smartphone Application Users</div>
+        <div class="pub-meta">Shinnosuke Date, <strong>Wenzhen Xu</strong>, Masato Taya, Takeshi Iwamoto — <em>Applied Human Informatics</em>, Vol. 4, No. 1, 2022. (査読有り)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">The Utility of Personality Types for Personalizing Persuasion</div>
+        <div class="pub-meta"><strong>Wenzhen Xu</strong>, Yuichi Ishikawa, Roberto Legaspi — <em>Lecture Notes in Computer Science (LNCS)</em>, Vol. 13213, pp. 240–254, 2022. (Springer, 査読有り・筆頭著者)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">A Psychological Model for Predicting the Smartphone Zombie Phenomenon and Intervention</div>
+        <div class="pub-meta">Tomohiro Sakai, Yuichi Kuriki, <strong>Wenzhen Xu</strong>, Masato Taya, Atsunori Minamikawa — <em>Lecture Notes in Computer Science (LNCS)</em>, Vol. 13213, pp. 208–220, 2022. (Springer, 査読有り)</div>
+      </div>
+    </div>
+
+    <!-- 2. Books & Workshops -->
+    <div class="pub-group">
+      <div class="pub-cat">
+        <span class="t-ja">編著・国際ワークショップ論文 (4部/篇)</span>
+        <span class="t-en">Edited Volumes & Workshop Proceedings (4)</span>
+        <span class="t-zh">编著与国际工作坊论文集 (4部/篇)</span>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">The Adjunct Proceedings of the 19th International Conference on Persuasive Technology</div>
+        <div class="pub-meta">Kiemute Oyibo, <strong>Wenzhen Xu</strong>, Elena Vlahu-Gjorgievska (Eds.) — <em>CEUR Workshop Proceedings</em>, 2024. (共編者)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">The 1st International Workshop on Data & Design Education and Practice: Changing behavior through data-driven design (DDEP 2024)</div>
+        <div class="pub-meta">Yuichi Washida, Minyuan Ma, Michael Björn, Tseng Ping Chiu, Nanami Furue, <strong>Wenzhen Xu</strong> — <em>CEUR Workshop Proceedings</em>, Vol. 3728, pp. 51–54, 2024.</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">The Relationship Between Individual Traits and CPE for Universal Creativity Education Program Design</div>
+        <div class="pub-meta">Nanami Furue, <strong>Wenzhen Xu</strong>, Masako Shimogo, Aiko Otsuka, Wakako Tsuchiyama, Atsuo Kawaguchi — <em>CEUR Workshop Proceedings</em>, Vol. 3728, pp. 59–65, 2024.</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title">Enhance Students' Resilience: A Case Study in Educating Data Design Programs within Traditional Business Academia</div>
+        <div class="pub-meta">Yuichi Washida, <strong>Wenzhen Xu</strong>, Nanami Furue — <em>CEUR Workshop Proceedings</em>, Vol. 3728, pp. 55–58, 2024.</div>
+      </div>
+    </div>
+
+    <!-- 3. Patents -->
+    <div class="pub-group">
+      <div class="pub-cat">
+        <span class="t-ja">産業財産権・特許 (2022–2026年 登録4件・公開3件)</span>
+        <span class="t-en">Patents & Intellectual Property (2022–2026)</span>
+        <span class="t-zh">发明专利与知识产权 (2022–2026年 授权4项·公开3项)</span>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title"><span class="pub-badge"><span class="t-ja">登録特許</span><span class="t-en">Registered Patent</span><span class="t-zh">授权专利</span></span> 推定介入結果から介入ポリシを決定する介入制御プログラム、装置、システム及び方法</div>
+        <div class="pub-meta">発明者: <strong>徐 文臻</strong>, 石川 雄一, レガスピ ロベルト セバスチャン, 池田 和史 — <strong>特許第7759865号</strong> / 特開2024-048666 (出願人: 株式会社KDDI総合研究所)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title"><span class="pub-badge"><span class="t-ja">登録特許</span><span class="t-en">Registered Patent</span><span class="t-zh">授权专利</span></span> 被面接者の心理に合わせた面接スクリプトを生成する装置、システム、プログラム及び方法</div>
+        <div class="pub-meta">発明者: <strong>徐 文臻</strong>, 多屋 優人, 南川 敦宣 — <strong>特許第7661271号</strong> / 特開2023-149003 (出願人: 株式会社KDDI総合研究所)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title"><span class="pub-badge"><span class="t-ja">登録特許</span><span class="t-en">Registered Patent</span><span class="t-zh">授权专利</span></span> 主体感推定モデル、装置及び方法、並びに行動変容促進モデル</div>
+        <div class="pub-meta">発明者: レガスピ ロベルト セバスチャン, <strong>徐 文臻</strong>, 和田 真弥, 小西 達也, 黒川 茂莉 — <strong>特許第7448502号</strong> / 特開2022-154041 (出願人: 株式会社KDDI総合研究所)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title"><span class="pub-badge"><span class="t-ja">登録特許</span><span class="t-en">Registered Patent</span><span class="t-zh">授权专利</span></span> 行動変容のための認知的刺激を生成する装置、モデル及び刺激情報生成・提示方法</div>
+        <div class="pub-meta">発明者: <strong>徐 文臻</strong>, 多屋 優人, 南川 敦宣 — <strong>特許第7361667号</strong> / 特開2022-020942 (出願人: 株式会社KDDI総合研究所)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title"><span class="pub-badge-open"><span class="t-ja">公開特許</span><span class="t-en">Published Patent</span><span class="t-zh">公开专利</span></span> 判定理由の提示可能なウェブ広告判定装置、システム、プログラム及び方法</div>
+        <div class="pub-meta">発明者: <strong>徐 文臻</strong>, 栗木 優一, 酒井 智弘, 多屋 優人 — 特開2023-047661 (出願人: 株式会社KDDI総合研究所)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title"><span class="pub-badge-open"><span class="t-ja">公開特許</span><span class="t-en">Published Patent</span><span class="t-zh">公开专利</span></span> タスク協力促進装置、タスク協力促進システムおよびタスク協力促進方法</div>
+        <div class="pub-meta">発明者: 酒井 智弘, 栗木 優一, <strong>徐 文臻</strong>, 多屋 優人 — 特開2023-047709 (出願人: 株式会社KDDI総合研究所)</div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-title"><span class="pub-badge-open"><span class="t-ja">公開特許</span><span class="t-en">Published Patent</span><span class="t-zh">公开专利</span></span> 利用中のアプリケーションに対する代替機能を推定する推定装置、プログラム及び方法</div>
+        <div class="pub-meta">発明者: 栗木 優一, <strong>徐 文臻</strong>, 酒井 智弘, 多屋 優人 — 特開2023-030532 (出願人: 株式会社KDDI総合研究所)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join" class="section">
+  <div class="container">
+    <div class="join-box">
+      <span class="sec-tag" style="color:#e2ce9d;">05 Join Our Lab</span>
+      <h3 class="serif" style="font-size:1.8rem; margin-bottom:1rem;">
+        <span class="t-ja">ゼミ生・大学院生の募集</span>
+        <span class="t-en">Join Our Lab (Seminar & Graduate Students)</span>
+        <span class="t-zh">研讨班（ゼミ）本科生与硕博研究生招募</span>
+      </h3>
+      <p style="color:rgba(255,255,255,0.88); margin-bottom:1.8rem; font-size:0.95rem;">
+        <span class="t-ja">一橋大学大学院経営管理研究科の博士後期課程（Ph.D.）、修士課程（Master / MBA）、および商学部の学部ゼミ生を募集しています。社会心理学・マーケティングの理論とデータサイエンス・AI技術を融合した先端研究を志す意欲的な方の参加を歓迎します。</span>
+        <span class="t-en">We welcome applications for Ph.D. programs, Master's degrees, and undergraduate seminar students at Hitotsubashi University. Join us in shaping data and AI-driven human behavior research.</span>
+        <span class="t-zh">本研究室长年面向全球招收一桥大学大学院经营管理研究科博士生（Ph.D.）、硕士生（Master / MBA）及商学部ゼミ生。欢迎对心理学与AI数据科学交叉领域抱有极大热情的研究者加入。</span>
+      </p>
+
+      <!-- HQ Magazine Highlight Card -->
+      <div class="hq-box">
+        <div style="max-width:700px;">
+          <span style="background:var(--accent); color:#0b1e36; font-size:0.72rem; font-weight:700; padding:2px 6px; border-radius:3px; text-transform:uppercase;">
+            <span class="t-ja">推薦記事 / HQマガジン特集</span>
+            <span class="t-en">Featured Interview / HQ Magazine</span>
+            <span class="t-zh">特别推荐 / HQ杂志专访</span>
+          </span>
+          <h4 style="font-size:1.05rem; font-weight:700; color:#fff; margin:0.3rem 0;">
+            <span class="t-ja">社会科学と情報科学を駆使して、人の自由な意思決定をサポートする</span>
+            <span class="t-en">Harnessing Social Science & Informatics to Empower Human Decision-Making</span>
+            <span class="t-zh">社会科学与信息科学融通，赋能人类自由自主的理性决策</span>
+          </h4>
+          <p style="font-size:0.85rem; color:rgba(255,255,255,0.85); margin:0;">
+            <span class="t-ja">一橋大学 HQウェブマガジン「研究室訪問」にて、徐准教授の研究の軌跡、学問への情熱、ゼミ・研究室の指導方針が詳しく特集されています。出願・参加を希望される方はぜひご一読ください。</span>
+            <span class="t-en">Featured in Hitotsubashi University HQ Web Magazine (Chat in the Den), detailing Dr. Xu's research journey, academic philosophy, and lab mentorship style. Strongly recommended for prospective applicants.</span>
+            <span class="t-zh">一桥大学官方 HQ Web Magazine《研究室探访》深度专访，详尽展现了徐文臻准教授的科研探索历程、治学育人理念及研究室研讨氛围。欢迎拟报考同学在申请前认真阅读。</span>
+          </p>
+        </div>
+        <a href="https://www.hit-u.ac.jp/hq-mag/chat_in_the_den/591_20250730/" target="_blank" class="btn btn-gold" style="white-space:nowrap; font-size:0.85rem; padding:0.6rem 1.2rem;">
+          <span class="t-ja">HQマガジンの記事を読む ↗</span>
+          <span class="t-en">Read HQ Article ↗</span>
+          <span class="t-zh">阅读HQ杂志专访 ↗</span>
+        </a>
+      </div>
+
+      <div class="grid-3" style="margin-bottom:2rem;">
+        <div style="background:rgba(255,255,255,0.08); padding:1.2rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+          <div style="color:#e2ce9d; font-weight:700; margin-bottom:0.4rem;">
+            🌐 <span class="t-ja">語学要件</span><span class="t-en">Language Requirement</span><span class="t-zh">语言要求</span>
+          </div>
+          <div style="font-size:0.85rem; color:rgba(255,255,255,0.8);">
+            <span class="t-ja">学術論文執筆のための<strong>高度な英語力</strong>が必須。日常指導では<strong>日本語または中国語のいずれかが流暢</strong>であること。</span>
+            <span class="t-en">Strong academic English proficiency is required. Additionally, fluency in either Japanese or Chinese is required for daily collaboration.</span>
+            <span class="t-zh">必须具备文献研读与论文撰写的<strong>高水平学术英语能力</strong>；同时要求<strong>熟练掌握日语或中文任一门语言</strong>进行日常交流。</span>
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,0.08); padding:1.2rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+          <div style="color:#e2ce9d; font-weight:700; margin-bottom:0.4rem;">
+            📚 <span class="t-ja">社会科学背景</span><span class="t-en">Social Science</span><span class="t-zh">社会科学基础</span>
+          </div>
+          <div style="font-size:0.85rem; color:rgba(255,255,255,0.8);">
+            <span class="t-ja">実験心理学、社会心理学、行動経済学、マーケティング論、消費者行動論の研究背景を持つ方。</span>
+            <span class="t-en">Background in experimental psychology, social psychology, behavioral economics, or marketing.</span>
+            <span class="t-zh">具备实验心理学、社会心理学、行为经济学、市场营销学或计算社会科学等学术训练背景。</span>
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,0.08); padding:1.2rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+          <div style="color:#e2ce9d; font-weight:700; margin-bottom:0.4rem;">
+            💻 <span class="t-ja">工学・情報科学歓迎</span><span class="t-en">CS / HCI Welcome</span><span class="t-zh">极度欢迎工科跨界</span>
+          </div>
+          <div style="font-size:0.85rem; color:rgba(255,255,255,0.8);">
+            <span class="t-ja">CS、HCI、機械学習・自然言語処理のバックグラウンドを持ち、人間行動変容に応用したい方を<strong>大いに歓迎</strong>。</span>
+            <span class="t-en">Candidates with CS, HCI, and ML backgrounds eager to apply computational rigor to human behavior are <strong>strongly encouraged</strong> to apply.</span>
+            <span class="t-zh"><strong>非常欢迎</strong>计算机科学（CS）、人机交互（HCI）、机器学习（ML/NLP）背景且渴望融合人类行为机理的同学！</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:rgba(184,151,88,0.2); border:1px dashed rgba(184,151,88,0.5); border-radius:6px; padding:1.2rem; font-size:0.88rem;">
+        <strong style="color:#f2e2be;">
+          <span class="t-ja">出願・事前コンタクト方法：</span>
+          <span class="t-en">How to Apply / Inquire:</span>
+          <span class="t-zh">申请与咨询方式：</span>
+        </strong><br>
+        <span class="t-ja">出願前に ①履歴書（CV）、②研究計画書（2〜3頁、問題意識・仮説・想定手法を明記）、③代表論文や卒業論文等のサンプルを添付の上、指導教員（wenzhen.xu@r.hit-u.ac.jp）宛にメールでご連絡ください。</span>
+        <span class="t-en">Prospective students should email Dr. Xu (wenzhen.xu@r.hit-u.ac.jp) with (1) a detailed CV, (2) a 2-3 page research proposal outlining research questions and methods, and (3) representative writing samples/theses.</span>
+        <span class="t-zh">有意申请者，请在出愿前将 ①个人学术简历（CV）、②研究计划书（2-3页，说明研究问题、文献综述、假说与方法）、③代表性论文或毕业论文样本，发送至导师邮箱：wenzhen.xu@r.hit-u.ac.jp。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <h4 class="serif" style="color:#fff; font-size:1.1rem; margin-bottom:0.5rem;">
+        <span class="t-ja">データ＆AI駆動型マーケティング研究室（徐研究室 / Xu's Lab）</span>
+        <span class="t-en">Data & AI-Driven Marketing Lab (Xu's Lab)</span>
+        <span class="t-zh">数据与AI驱动型营销科学实验室（徐研究室 / Xu's Lab）</span>
+      </h4>
+      <p style="line-height:1.7;">
+        Data & AI-Driven Marketing Lab (Xu's Lab)<br>
+        <span class="t-ja">一橋大学大学院経営管理研究科 / 商学部<br>〒186-8601 東京都国立市中2-1 一橋大学 国立キャンパス 東本館108室 (East Main Building 108)</span>
+        <span class="t-en">Graduate School of Business Administration / Faculty of Commerce, Hitotsubashi University<br>Room 108, East Main Building, 2-1 Naka, Kunitachi, Tokyo 186-8601, Japan</span>
+        <span class="t-zh">一桥大学商学部 · 大学院经营管理研究科<br>〒186-8601 日本东京都国立市中2-1 一桥大学 国立校区 东本馆108室 (East Main Building 108)</span><br>
+        Email: wenzhen.xu@r.hit-u.ac.jp | Tel: 042-580-8859
+      </p>
+    </div>
+    <div>
+      <h5 style="color:#fff; font-size:0.9rem; margin-bottom:0.8rem;">Official Links</h5>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:0.4rem;">
+        <li><a href="https://www.hit-u.ac.jp/hq-mag/chat_in_the_den/591_20250730/" target="_blank">HQマガジン 研究室訪問 ↗</a></li>
+        <li><a href="https://hri.ad.hit-u.ac.jp/html/100001720_research_activity_ja.html" target="_blank">一橋大学 研究者情報 ↗</a></li>
+        <li><a href="https://researchmap.jp/wenzhenxu" target="_blank">researchmap ↗</a></li>
+        <li><a href="https://www.cm.hit-u.ac.jp/" target="_blank">一橋大学 経営管理研究科 ↗</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 Data & AI-Driven Marketing Lab (Xu's Lab), Hitotsubashi University. All rights reserved.
+  </div>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.innerText.toLowerCase() === lang);
+  });
+}
+</script>
+
+</body>
+</html>
